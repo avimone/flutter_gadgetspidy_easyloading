@@ -195,9 +195,7 @@ class _Indicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(15.0),
-      width: MediaQuery.of(context).size.width,
-      height: 50,
+      margin: const EdgeInsets.all(50.0),
       decoration: BoxDecoration(
         color: EasyLoadingTheme.backgroundColor,
         borderRadius: BorderRadius.circular(
@@ -206,15 +204,15 @@ class _Indicator extends StatelessWidget {
         boxShadow: EasyLoadingTheme.boxShadow,
       ),
       padding: EasyLoadingTheme.contentPadding,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           if (indicator != null)
             Container(
-              //  color: Colors.red,
               margin: status?.isNotEmpty == true
-                  ? EdgeInsets.only(right: 5)
+                  ? EasyLoadingTheme.textPadding
                   : EdgeInsets.zero,
               child: indicator,
             ),
