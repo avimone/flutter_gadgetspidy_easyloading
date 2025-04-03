@@ -476,7 +476,7 @@ class EasyLoading {
 
     Completer<void> completer = Completer<void>();
     _key = GlobalKey<EasyLoadingContainerState>();
-    _w = isLong == true
+    _w = isLong
         ? EasyLoadingContainerLong(
             key: _key,
             status: status,
