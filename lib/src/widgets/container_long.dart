@@ -31,7 +31,7 @@ import '../easy_loading.dart';
 //https://docs.flutter.dev/development/tools/sdk/release-notes/release-notes-3.0.0
 T? _ambiguate<T>(T? value) => value;
 
-class EasyLoadingContainer extends StatefulWidget {
+class EasyLoadingContainerLong extends StatefulWidget {
   final Widget? indicator;
   final String? status;
   final bool? dismissOnTap;
@@ -40,7 +40,7 @@ class EasyLoadingContainer extends StatefulWidget {
   final Completer<void>? completer;
   final bool animation;
 
-  const EasyLoadingContainer({
+  const EasyLoadingContainerLong({
     Key? key,
     this.indicator,
     this.status,
@@ -52,10 +52,11 @@ class EasyLoadingContainer extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  EasyLoadingContainerState createState() => EasyLoadingContainerState();
+  EasyLoadingContainerLongState createState() =>
+      EasyLoadingContainerLongState();
 }
 
-class EasyLoadingContainerState extends State<EasyLoadingContainer>
+class EasyLoadingContainerLongState extends State<EasyLoadingContainerLong>
     with SingleTickerProviderStateMixin {
   String? _status;
   Color? _maskColor;

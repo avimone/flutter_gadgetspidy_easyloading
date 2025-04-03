@@ -18,7 +18,7 @@ void configLoading() {
     ..displayDuration = const Duration(milliseconds: 2000)
     ..indicatorType = EasyLoadingIndicatorType.fadingCircle
     ..loadingStyle = EasyLoadingStyle.dark
-    ..indicatorSize = 45.0
+    ..indicatorSize = 22.0
     ..radius = 10.0
     ..progressColor = Colors.yellow
     ..backgroundColor = Colors.green
@@ -159,7 +159,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       _timer = Timer.periodic(const Duration(milliseconds: 100),
                           (Timer timer) {
                         EasyLoading.showProgress(_progress,
-                            status: '${(_progress * 100).toStringAsFixed(0)}%');
+                            status: '${(_progress * 100).toStringAsFixed(0)}%',
+                            isLong: true);
                         _progress += 0.03;
 
                         if (_progress >= 1) {

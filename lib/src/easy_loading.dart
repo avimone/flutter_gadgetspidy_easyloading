@@ -24,6 +24,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/src/widgets/container_long.dart';
 
 import './widgets/container.dart';
 import './widgets/progress.dart';
@@ -251,12 +252,14 @@ class EasyLoading {
     Widget? indicator,
     EasyLoadingMaskType? maskType,
     bool? dismissOnTap,
+    bool isLong = false,
   }) {
     Widget w = indicator ?? (_instance.indicatorWidget ?? LoadingIndicator());
     return _instance._show(
       status: status,
       maskType: maskType,
       dismissOnTap: dismissOnTap,
+      isLong: isLong,
       w: w,
     );
   }
@@ -266,6 +269,7 @@ class EasyLoading {
     double value, {
     String? status,
     EasyLoadingMaskType? maskType,
+    bool isLong = false,
   }) async {
     assert(
       value >= 0.0 && value <= 1.0,
@@ -291,6 +295,7 @@ class EasyLoading {
         status: status,
         maskType: maskType,
         dismissOnTap: false,
+        isLong: isLong,
         w: w,
       );
       _instance._progressKey = _progressKey;
@@ -307,6 +312,7 @@ class EasyLoading {
     Duration? duration,
     EasyLoadingMaskType? maskType,
     bool? dismissOnTap,
+    bool isLong = false,
   }) {
     Widget w = _instance.successWidget ??
         Icon(
@@ -319,6 +325,7 @@ class EasyLoading {
       duration: duration ?? EasyLoadingTheme.displayDuration,
       maskType: maskType,
       dismissOnTap: dismissOnTap,
+      isLong: isLong,
       w: w,
     );
   }
@@ -329,6 +336,7 @@ class EasyLoading {
     Duration? duration,
     EasyLoadingMaskType? maskType,
     bool? dismissOnTap,
+    bool isLong = false,
   }) {
     Widget w = _instance.errorWidget ??
         Icon(
@@ -341,6 +349,7 @@ class EasyLoading {
       duration: duration ?? EasyLoadingTheme.displayDuration,
       maskType: maskType,
       dismissOnTap: dismissOnTap,
+      isLong: isLong,
       w: w,
     );
   }
@@ -351,6 +360,7 @@ class EasyLoading {
     Duration? duration,
     EasyLoadingMaskType? maskType,
     bool? dismissOnTap,
+    bool isLong = false,
   }) {
     Widget w = _instance.infoWidget ??
         Icon(
@@ -363,6 +373,7 @@ class EasyLoading {
       duration: duration ?? EasyLoadingTheme.displayDuration,
       maskType: maskType,
       dismissOnTap: dismissOnTap,
+      isLong: isLong,
       w: w,
     );
   }
@@ -374,14 +385,15 @@ class EasyLoading {
     EasyLoadingToastPosition? toastPosition,
     EasyLoadingMaskType? maskType,
     bool? dismissOnTap,
+    bool isLong = false,
   }) {
     return _instance._show(
-      status: status,
-      duration: duration ?? EasyLoadingTheme.displayDuration,
-      toastPosition: toastPosition ?? EasyLoadingTheme.toastPosition,
-      maskType: maskType,
-      dismissOnTap: dismissOnTap,
-    );
+        status: status,
+        duration: duration ?? EasyLoadingTheme.displayDuration,
+        toastPosition: toastPosition ?? EasyLoadingTheme.toastPosition,
+        maskType: maskType,
+        dismissOnTap: dismissOnTap,
+        isLong: isLong);
   }
 
   /// dismiss loading
@@ -420,6 +432,7 @@ class EasyLoading {
     EasyLoadingMaskType? maskType,
     bool? dismissOnTap,
     EasyLoadingToastPosition? toastPosition,
+    bool isLong = false,
   }) async {
     assert(
       overlayEntry != null,
@@ -463,16 +476,27 @@ class EasyLoading {
 
     Completer<void> completer = Completer<void>();
     _key = GlobalKey<EasyLoadingContainerState>();
-    _w = EasyLoadingContainer(
-      key: _key,
-      status: status,
-      indicator: w,
-      animation: animation,
-      toastPosition: toastPosition,
-      maskType: maskType,
-      dismissOnTap: dismissOnTap,
-      completer: completer,
-    );
+    _w = isLong
+        ? EasyLoadingContainerLong(
+            key: _key,
+            status: status,
+            indicator: w,
+            animation: animation,
+            toastPosition: toastPosition,
+            maskType: maskType,
+            dismissOnTap: dismissOnTap,
+            completer: completer,
+          )
+        : EasyLoadingContainer(
+            key: _key,
+            status: status,
+            indicator: w,
+            animation: animation,
+            toastPosition: toastPosition,
+            maskType: maskType,
+            dismissOnTap: dismissOnTap,
+            completer: completer,
+          );
     completer.future.whenComplete(() {
       _callback(EasyLoadingStatus.show);
       if (duration != null) {
